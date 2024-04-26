@@ -15,12 +15,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    fetchData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await HomeScreenController.getAllData();
+      setState(() {});
+    });
     super.initState();
-  }
-
-  fetchData() async {
-    await HomeScreenController.getAllData();
   }
 
   @override
@@ -80,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: ColorConstant.primaryWhite.withOpacity(0.6)),
                   ),
                   Text(
-                    "\$${HomeScreenController.transactionList.lastOrNull?.balanceAmount ?? "0"}",
+                    "\$${HomeScreenController.balanceAmount}",
                     style: TextStyle(
                         fontSize: 40,
                         color: ColorConstant.primaryWhite,
@@ -115,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: ColorConstant.primaryGreen),
                                   ),
                                   Text(
-                                    "\$${HomeScreenController.transactionList.lastOrNull?.totalIncome ?? "0"}",
+                                    "\$${HomeScreenController.totalIncome}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 25),
@@ -149,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: ColorConstant.primaryRed),
                                   ),
                                   Text(
-                                    "\$${HomeScreenController.transactionList.lastOrNull?.totalExpense ?? "0"}",
+                                    "\$${HomeScreenController.totalExpense}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 25),
